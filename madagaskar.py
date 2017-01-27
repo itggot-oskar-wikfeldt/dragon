@@ -1,5 +1,5 @@
-SIZE = 8
-matrix = [[[0]*4]*SIZE*3*2 for i in range(SIZE*2)]
+SIZE = 20
+matrix = [[[0,0,0,0]]*SIZE*3*2 for i in range(SIZE*2)]
 drawMatrix = [[0]*SIZE*3*2 for i in range(SIZE*2)]
 
 '''
@@ -14,8 +14,8 @@ drawMatrix = [[0]*SIZE*3*2 for i in range(SIZE*2)]
 
  '''
 
-startX = 2
-startY = 2
+startX = currentX = 2
+startY = currentY = 2
 matrix[startX][startY] = [1, 0, 0, 0]
 
 def rotate(val):
@@ -24,24 +24,25 @@ def rotate(val):
         val = 0
     return val
 
-for i in range(0):
-    tempMatrix = [[0] * SIZE * 3 * 2 for i in range(SIZE * 2)]
-    for a in range(len(matrix)):
-        for b in range(len(matrix[0])):
-            tempMatrix[a][b] = matrix[a][b]
+for i in range(5):
+    tempMatrix = matrix.copy()
 
     for x in range(SIZE):
         for y in range(SIZE*3):
-            diffX = x - startX
-            diffY = y - startY
+            diffX = x - currentX
+            diffY = y - currentY
             if matrix[x][y][0] == 1:
                 tempMatrix[x + diffY][y + diffX][1] = 1
-            elif matrix[x][y][1] == 1:
-                tempMatrix[x + diffY][y + diffX][1] = 1
-            elif matrix[x][y][2] == 1:
-                tempMatrix[x + diffY][y + diffX][1] = 1
-            elif matrix[x][y][3] == 1:
-                tempMatrix[x + diffY][y + diffX][1] = 1
+                if x == currentX and y == currentY:
+                    print("hello")
+                    currentX = x + diffY
+                    currentY = y+1 + diffX
+            if matrix[x][y][1] == 1:
+                tempMatrix[x + diffY][y + diffX][2] = 1
+            if matrix[x][y][2] == 1:
+                tempMatrix[x + diffY][y + diffX][3] = 1
+            if matrix[x][y][3] == 1:
+                tempMatrix[x + diffY][y + diffX][0] = 1
 
     matrix = tempMatrix.copy()
 
